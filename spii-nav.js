@@ -3,7 +3,7 @@
    Use in <head>, without defer, so the theme is set before anything paints:
      <script src="https://surf-ori.github.io/spii-design-system/spii-nav.js"></script>
    Optional: <div id="spii-topbar"></div> at the top of <body>; otherwise the bar goes first in <body>.
-   Options on the script tag: data-topbar="off" (theme and API only).
+   Options on the script tag: data-topbar="off" (theme and API only), data-feedback="off" (no feedback button).
    The menu follows spii-deliverables.json; tools/build-assets.py copies it in below. */
 (function () {
   'use strict';
@@ -98,6 +98,112 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
   }
 
+  /* ---------- Feedback button ----------
+     A floating button at the bottom right of every page (as on the DURF sites). It opens a short,
+     inviting dialog; "Continue on GitHub" opens the issue form (.github/ISSUE_TEMPLATE/feedback.yml)
+     of the repo the page lives in, with the text filled in. Built in a shadow root, so it never clashes
+     with the page's own styles, while it still reads the SPII tokens.
+     On <html>: data-feedback-repo (override the repo), data-feedback-field (the form field that gets
+     the text, default "feedback"), data-feedback-email (also offer e-mail). Off: data-feedback="off"
+     on the script tag, and in embeds. */
+  var ORG = 'https://github.com/surf-ori/';
+  var FB_REPOS = ['spii-overview', 'spii-design-system'];
+
+  function feedbackRepo() {
+    var seg = location.pathname.split('/').filter(Boolean)[0];
+    var known = FB_REPOS.concat(API.deliverables.map(function (d) { return d.repo; }));
+    return root.getAttribute('data-feedback-repo') || (known.indexOf(seg) >= 0 ? seg : 'spii-overview');
+  }
+
+  function pageUrl() {
+    var u = new URL(location.href);
+    u.searchParams.delete('embed');
+    return u.toString();
+  }
+
+  var FB_CSS =
+    ':host{all:initial}*{box-sizing:border-box}' +
+    '.fab{position:fixed;right:max(1rem,env(safe-area-inset-right));bottom:max(1rem,env(safe-area-inset-bottom));z-index:90;display:inline-flex;align-items:center;gap:.5rem;' +
+      'padding:.6rem 1rem;border:0;border-radius:999px;cursor:pointer;font:600 .9375rem/1.2 var(--font-sans,system-ui,sans-serif);' +
+      'background:var(--spii-green,#1f5c43);color:var(--accent-on,#fff);box-shadow:0 .25rem 1rem rgba(0,0,0,.2)}' +
+    '.fab:hover{filter:brightness(1.08)}.fab:focus-visible{outline:2px solid var(--foreground,#161f18);outline-offset:3px}' +
+    '.fab svg{width:1.1rem;height:1.1rem}' +
+    '@media (max-width:40rem){.fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.fab{padding:.75rem}}' +
+    '@media print{.fab{display:none}}' +
+    'dialog{width:min(34rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);padding:0;border:1px solid var(--border,#d9d4c3);border-radius:.75rem;' +
+      'background:var(--card,#fff);color:var(--foreground,#161f18);font:400 1rem/1.55 var(--font-sans,system-ui,sans-serif);box-shadow:0 1.5rem 3rem rgba(0,0,0,.3)}' +
+    'dialog::backdrop{background:rgba(16,20,15,.5)}' +
+    'form{display:flex;flex-direction:column;max-height:calc(100dvh - 2rem);margin:0}' +
+    '.body{padding:1.25rem 1.5rem .5rem;overflow-y:auto}' +
+    'h2{margin:0 0 .5rem;font:700 1.375rem/1.25 var(--font-heading,var(--font-sans,system-ui,sans-serif));letter-spacing:-.01em}' +
+    'p{margin:0 0 .75rem}.muted{color:var(--muted-foreground,#4d5850);font-size:.875rem}' +
+    'a{color:var(--link,#1f5c43);font-weight:600}' +
+    'label{display:block;margin:.75rem 0 .25rem;font-weight:700;font-size:.9375rem}' +
+    'textarea{width:100%;min-height:7.5rem;resize:vertical;padding:.55rem .7rem;border:1px solid var(--input,#c9c3b0);border-radius:.5rem;background:var(--background,#fff);color:inherit;font:inherit}' +
+    'textarea:focus{outline:2px solid var(--ring,#1f5c43);outline-offset:0;border-color:transparent}' +
+    '.page{font-size:.8125rem;color:var(--muted-foreground,#4d5850);overflow-wrap:anywhere}' +
+    '.actions{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:flex-end;padding:1rem 1.5rem 1.25rem;border-top:1px solid var(--border,#d9d4c3)}' +
+    'button{font:600 .9375rem/1.2 var(--font-sans,system-ui,sans-serif);padding:.6rem 1rem;border-radius:.5rem;cursor:pointer;border:1px solid var(--input,#c9c3b0);background:transparent;color:inherit}' +
+    'button.primary{background:var(--spii-green,#1f5c43);border-color:var(--spii-green,#1f5c43);color:var(--accent-on,#fff)}' +
+    'button.ghost{border-color:transparent;margin-right:auto}' +
+    'button:focus-visible{outline:2px solid var(--ring,#1f5c43);outline-offset:2px}' +
+    '.hint{margin:.5rem 0 0;font-size:.8125rem;color:var(--danger,#b3261e)}';
+
+  function buildFeedback() {
+    if (document.getElementById('spii-feedback')) return;
+    var host = document.createElement('div');
+    host.id = 'spii-feedback';
+    var sh = host.attachShadow({ mode: 'open' });
+    var email = root.getAttribute('data-feedback-email');
+    sh.innerHTML = '<style>' + FB_CSS + '</style>' +
+      '<button class="fab" type="button" aria-haspopup="dialog">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+        '<span>Feedback</span></button>' +
+      '<dialog aria-labelledby="fb-title"><form method="dialog">' +
+        '<div class="body">' +
+          '<h2 id="fb-title">We would love to hear from you</h2>' +
+          '<p>Every remark helps: a question, an idea, something unclear, a typo, or something you liked. SPII is something we build together with the Open Science community.</p>' +
+          '<label for="fb-text">Your feedback</label>' +
+          '<textarea id="fb-text" placeholder="What would you like to share?"></textarea>' +
+          '<p class="page">About: <span id="fb-page"></span></p>' +
+          '<p class="hint" id="fb-hint" hidden>Write a few words first, then choose how to send it.</p>' +
+          '<p class="muted">On GitHub your feedback becomes a public issue in this site\'s tracker, where you can add more (a GitHub account is needed).' +
+            (email ? ' By e-mail it reaches the team directly: <a href="mailto:' + esc(email) + '">' + esc(email) + '</a>.' : '') + '</p>' +
+        '</div>' +
+        '<div class="actions">' +
+          '<button type="submit" class="ghost" value="cancel">Cancel</button>' +
+          (email ? '<button type="button" id="fb-mail">Send by e-mail</button>' : '') +
+          '<button type="button" class="primary" id="fb-gh">Continue on GitHub</button>' +
+        '</div>' +
+      '</form></dialog>';
+
+    var dlg = sh.querySelector('dialog'), fab = sh.querySelector('.fab');
+    var text = sh.getElementById('fb-text'), hint = sh.getElementById('fb-hint');
+    fab.addEventListener('click', function () {
+      sh.getElementById('fb-page').textContent = document.title + ' (' + pageUrl() + ')';
+      hint.hidden = true;
+      dlg.showModal();
+      text.focus();
+    });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    text.addEventListener('input', function () { if (text.value.trim()) hint.hidden = true; });
+    function ready() { if (text.value.trim()) return true; hint.hidden = false; text.focus(); return false; }
+    function body() { return text.value + '\n\nPage: ' + pageUrl(); }
+    sh.getElementById('fb-gh').addEventListener('click', function () {
+      if (!ready()) return;
+      var q = new URLSearchParams({ template: 'feedback.yml' });
+      q.set(root.getAttribute('data-feedback-field') || 'feedback', body());
+      window.open(ORG + feedbackRepo() + '/issues/new?' + q.toString(), '_blank', 'noopener');
+      dlg.close();
+    });
+    if (email) sh.getElementById('fb-mail').addEventListener('click', function () {
+      if (!ready()) return;
+      location.href = 'mailto:' + email + '?subject=' + encodeURIComponent('Feedback: ' + document.title) + '&body=' + encodeURIComponent(body());
+      dlg.close();
+    });
+    document.body.appendChild(host);
+  }
+
   function favicon() {
     if (document.querySelector('link[rel~="icon"]')) return;
     var l = document.createElement('link');
@@ -108,6 +214,7 @@
   function start() {
     favicon();
     if (OPT.topbar !== 'off') build();
+    if (!root.hasAttribute('data-embed') && OPT.feedback !== 'off') buildFeedback();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
