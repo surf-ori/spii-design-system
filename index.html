@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPII design system</title>
+  <meta name="description" content="Tokens, logo, deliverable hexagons and the shared top bar for the SPII sites.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="lib/oat.min.css">
+  <link rel="stylesheet" href="spii.css">
+  <script src="spii-nav.js"></script>
+  <script src="lib/oat.min.js" defer></script>
+  <style>
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+    .swatch { border: 1px solid var(--border); border-radius: var(--spii-radius); overflow: hidden; background: var(--card); }
+    .swatch > div:first-child { height: 3.5rem; background: var(--deliv-color); }
+    .swatch > div:last-child { padding: .6rem .8rem; font-size: .875rem; }
+    .swatch code { color: var(--deliv-ink); }
+    pre { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--spii-radius); padding: 1rem; font-size: .8125rem; }
+
+    /* The interactive figure: six hexagons, hover or focus explains, click opens the site. */
+    .hex-figure { display: grid; grid-template-columns: minmax(16rem, 26rem) minmax(0, 1fr); gap: 2rem; align-items: center; margin: 1rem 0 2.5rem; }
+    .hex-figure svg { width: 100%; height: auto; overflow: visible; }
+    .hex-figure .lines { stroke: var(--border); }
+    .hex-figure a image { transition: transform .15s ease; transform-box: fill-box; transform-origin: center; }
+    .hex-figure a:is(:hover, :focus-visible, .is-active) image { transform: scale(1.12); }
+    .hex-figure a:focus-visible { outline: none; }
+    .hex-figure .label { font: 700 9px var(--font-sans); fill: var(--muted-foreground); text-anchor: middle; }
+    .hex-caption { min-height: 9rem; }
+    .hex-caption .kicker { margin: 0; color: var(--deliv-ink, var(--muted-foreground)); font-weight: 600; font-size: .8125rem; letter-spacing: .06em; text-transform: uppercase; }
+    .hex-caption h3 { margin: .2rem 0 .4rem; }
+    .hex-caption p { margin: 0; color: var(--muted-foreground); }
+    @media (max-width: 44rem) { .hex-figure { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="spii-page-head">
+    <div class="spii-shell spii-page-head__inner">
+      <img src="assets/spii-logo.svg" alt="" width="132">
+      <div class="spii-page-head__text">
+        <p class="kicker">Strategic Plan for Integrated Infrastructure</p>
+        <h1>SPII design system</h1>
+        <p class="byline">One look for the six SPII deliverable sites: tokens, type, the logo, a hexagon per deliverable and the shared top bar with the theme choice. Built on <a href="https://oat.ink">oat</a>, modelled on the <a href="https://durf-project.github.io/durf-design-system/">DURF design system</a>.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="spii-shell">
+    <section class="spii-prose" style="max-width:none">
+      <h2>The six deliverables</h2>
+      <p>Two rows of three: each tool (bottom) puts the reference-model part above it into practice. Hover or focus a hexagon for what it is; click to open its site.</p>
+      <div class="hex-figure">
+        <svg id="hex-figure" viewBox="40 15 240 230" role="group" aria-label="The six SPII deliverables"></svg>
+        <div class="hex-caption" id="hex-caption" aria-live="polite">
+          <p class="kicker">SPII</p>
+          <h3>Reference model and tools</h3>
+          <p>Three reference-model parts on top, each with the tool that operationalises it below.</p>
+        </div>
+      </div>
+
+      <h2>Colours</h2>
+      <p>The brand is the green and warm paper of the <a href="https://surf-ori.github.io/spii-overview/">overview page</a>. Each deliverable pair shares a hue: the reference model is the lighter tone, its tool the deeper one. Set <code>data-deliverable="2a"</code> on any element to get <code>--deliv-color</code>, <code>--deliv-ink</code>, <code>--deliv-tint</code> and <code>--deliv-on</code>; set <code>&lt;html data-accent="2a"&gt;</code> to give a whole site that accent.</p>
+      <div class="doc-grid" id="swatches"></div>
+
+      <h2>Hexagons</h2>
+      <p>Each deliverable has its hexagon with a pictogram, as a separate SVG in <code>assets/hex/</code> (for sites, cards and slides). In a page: <code>&lt;span class="spii-hex" data-deliverable="3b"&gt;&lt;/span&gt;</code>, size via <code>--spii-hex-size</code>.</p>
+      <div class="doc-grid" id="cards"></div>
+
+      <h2>Logo and favicon</h2>
+      <p><code>assets/spii-logo.svg</code> is the diagram of the overview page (it follows the system's light or dark mode); <code>assets/spii-logo-pictograms.svg</code> is the large version with the six pictograms; <code>assets/favicon.svg</code> is a square crop for browser tabs.</p>
+      <p style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+        <img src="assets/spii-logo.svg" alt="SPII logo" width="180">
+        <img src="assets/spii-logo-pictograms.svg" alt="SPII logo with pictograms" width="220">
+        <img src="assets/favicon.svg" alt="SPII favicon" width="48">
+        <img src="assets/favicon.svg" alt="" width="16">
+      </p>
+
+      <h2>Use it in a site</h2>
+      <p>Put this in the head of every page, in this order. Load <code>spii-nav.js</code> without <code>defer</code>, so the theme is set before anything paints. The top bar is placed first in the body, or at <code>&lt;div id="spii-topbar"&gt;&lt;/div&gt;</code>.</p>
+      <pre><code>&lt;link rel="stylesheet" href="https://surf-ori.github.io/spii-design-system/lib/oat.min.css"&gt;
+&lt;link rel="stylesheet" href="https://surf-ori.github.io/spii-design-system/spii.css"&gt;
+&lt;script src="https://surf-ori.github.io/spii-design-system/spii-nav.js"&gt;&lt;/script&gt;
+&lt;script src="https://surf-ori.github.io/spii-design-system/lib/oat.min.js" defer&gt;&lt;/script&gt;</code></pre>
+      <p>The theme (system, light, dark) is stored under <code>spii-theme</code> in localStorage and shared by all SPII sites. Pages can read it with <code>SPII.theme()</code>, change it with <code>SPII.setTheme("dark")</code>, and listen for the <code>spii:theme</code> event.</p>
+
+      <h2>Components</h2>
+      <div class="spii-callout" data-deliverable="1b"><strong>Callout.</strong> <code>.spii-callout</code>, in a deliverable's colour with <code>data-deliverable</code>.</div>
+      <p><span class="spii-tag" data-deliverable="1a">Tag 1A</span> <span class="spii-tag" data-deliverable="2b">Tag 2B</span> <span class="spii-tag">Neutral tag</span>
+        <button type="button">Primary</button> <button type="button" class="outline">Outline</button></p>
+    </section>
+  </main>
+
+  <footer class="spii-footer">
+    <div class="spii-shell">SPII design system v0.1 · <a href="https://github.com/surf-ori/spii-design-system">Source on GitHub</a> · EUPL-1.2, based on the DURF design system · oat (MIT) · Outfit (SIL OFL)</div>
+  </footer>
+
+  <script>
+    (function () {
+      var NS = "http://www.w3.org/2000/svg";
+      var COLS = [80, 160, 240], ROWS = [70, 180];
+      var svg = document.getElementById("hex-figure");
+      var caption = document.getElementById("hex-caption");
+      var defaultCaption = caption.innerHTML;
+      function el(name, attrs) { var e = document.createElementNS(NS, name); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+      function text(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+      var lines = el("g", { "class": "lines", fill: "none", "stroke-width": "1.5" });
+      COLS.forEach(function (x) { lines.appendChild(el("line", { x1: x, y1: ROWS[0], x2: x, y2: ROWS[1] })); });
+      lines.appendChild(el("line", { x1: COLS[0], y1: ROWS[0], x2: COLS[2], y2: ROWS[0] }));
+      svg.appendChild(lines);
+
+      SPII.deliverables.forEach(function (d) {
+        var x = COLS[d.pair - 1], y = d.kind === "Tool" ? ROWS[1] : ROWS[0];
+        var a = el("a", { href: d.url, "aria-label": d.id.toUpperCase() + " " + d.title + ": " + d.summary });
+        a.appendChild(el("image", { href: "assets/hex/" + d.id + ".svg", x: x - 25, y: y - 34, width: 50, height: 68 }));
+        var label = el("text", { "class": "label", x: x, y: y + (y === ROWS[0] ? -40 : 48) });
+        label.textContent = d.id.toUpperCase();
+        a.appendChild(label);
+        function show() {
+          svg.querySelectorAll("a.is-active").forEach(function (o) { o.classList.remove("is-active"); });
+          a.classList.add("is-active");
+          caption.setAttribute("data-deliverable", d.id);
+          caption.innerHTML = '<p class="kicker">' + d.id.toUpperCase() + " · " + text(d.kind) + "</p><h3>" + text(d.title) + "</h3><p>" + text(d.summary) + "</p>";
+        }
+        a.addEventListener("mouseenter", show);
+        a.addEventListener("focus", show);
+        svg.appendChild(a);
+      });
+      svg.addEventListener("mouseleave", function () {
+        if (svg.contains(document.activeElement)) return;
+        svg.querySelectorAll("a.is-active").forEach(function (o) { o.classList.remove("is-active"); });
+        caption.removeAttribute("data-deliverable");
+        caption.innerHTML = defaultCaption;
+      });
+
+      var swatches = document.getElementById("swatches"), cards = document.getElementById("cards");
+      SPII.deliverables.forEach(function (d) {
+        swatches.insertAdjacentHTML("beforeend", '<div class="swatch" data-deliverable="' + d.id + '"><div></div><div><strong>' + d.id.toUpperCase() + " " + text(d.short) + "</strong><br><code>--spii-" + d.id + "</code> " + d.colour + "</div></div>");
+        cards.insertAdjacentHTML("beforeend", '<a class="spii-card" data-deliverable="' + d.id + '" href="' + d.url + '" style="display:flex;gap:1rem;align-items:center"><span class="spii-hex"></span><span><span class="code">' + d.id.toUpperCase() + "</span> " + text(d.kind) + "<br><strong>" + text(d.title) + "</strong></span></a>");
+      });
+    })();
+  </script>
+</body>
+</html>

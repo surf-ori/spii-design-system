@@ -1,0 +1,238 @@
+/* SPII design system v0.1
+   A thin layer on top of oat (https://oat.ink, @knadh/oat@1.0.0, MIT), modelled on the DURF design
+   system (https://github.com/durf-project/durf-design-system, EUPL-1.2). Load lib/oat.min.css first,
+   then this file. Everything here is unlayered and so wins over oat's @layer rules. */
+
+@font-face { font-family: "Outfit"; font-weight: 400; font-display: swap; src: url("fonts/outfit-400.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-weight: 500; font-display: swap; src: url("fonts/outfit-500.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-weight: 600; font-display: swap; src: url("fonts/outfit-600.woff2") format("woff2"); }
+@font-face { font-family: "Outfit"; font-weight: 700; font-display: swap; src: url("fonts/outfit-700.woff2") format("woff2"); }
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  color-scheme: light dark;
+
+  /* Brand: the green and warm paper of the SPII overview page */
+  --spii-green: light-dark(#1f5c43, #59b98a);
+  --spii-green-strong: light-dark(#153f2e, #7fd1a6);
+  --spii-green-soft: light-dark(#dfe9df, #1e2c22);
+
+  /* The six deliverables (source: spii-deliverables.json). Each pair shares a hue: the reference
+     model (a) is the lighter tone, its tool (b) the deeper one.
+     --spii-<id>       brand colour, the same in light and dark
+     --spii-<id>-ink   text in that colour, readable on the page (light and dark)
+     --spii-<id>-tint  soft background in that colour
+     --spii-<id>-on    text on a surface in the full colour */
+  --spii-1a: #7B3FB0;  --spii-1b: #52247D;
+  --spii-2a: #E8702A;  --spii-2b: #B04A12;
+  --spii-3a: #1F86C1;  --spii-3b: #145F8C;
+  --spii-1a-ink: light-dark(#6A2FA0, #C9A2EC);  --spii-1b-ink: light-dark(#52247D, #B793DA);
+  --spii-2a-ink: light-dark(#A84A10, #F39A63);  --spii-2b-ink: light-dark(#9A3F0E, #E98A55);
+  --spii-3a-ink: light-dark(#176C9E, #6CB9E6);  --spii-3b-ink: light-dark(#145F8C, #5DA8D6);
+  --spii-1a-tint: color-mix(in srgb, var(--spii-1a) 14%, var(--background));
+  --spii-1b-tint: color-mix(in srgb, var(--spii-1b) 14%, var(--background));
+  --spii-2a-tint: color-mix(in srgb, var(--spii-2a) 16%, var(--background));
+  --spii-2b-tint: color-mix(in srgb, var(--spii-2b) 14%, var(--background));
+  --spii-3a-tint: color-mix(in srgb, var(--spii-3a) 14%, var(--background));
+  --spii-3b-tint: color-mix(in srgb, var(--spii-3b) 14%, var(--background));
+  --spii-1a-on: #FFFFFF; --spii-1b-on: #FFFFFF;
+  --spii-2a-on: #1B0C02; --spii-2b-on: #FFFFFF;
+  --spii-3a-on: #FFFFFF; --spii-3b-on: #FFFFFF;
+
+  /* Accent of a site: SPII green unless <html data-accent="1a"> ... "3b" picks a deliverable. */
+  --accent-solid: var(--spii-green);
+  --accent-on: light-dark(#fbfdfb, #10140f);
+  --accent-ink: var(--accent-solid);
+
+  /* Oat tokens, recoloured */
+  --background: light-dark(#f6f4ec, #10140f);
+  --foreground: light-dark(#161f18, #eae7db);
+  --card: light-dark(#ffffff, #161c15);
+  --card-foreground: var(--foreground);
+  --primary: var(--accent-solid);
+  --primary-foreground: var(--accent-on);
+  --secondary: light-dark(#eeebdf, #1c231b);
+  --secondary-foreground: var(--foreground);
+  --muted: light-dark(#eeebdf, #1c231b);
+  --muted-foreground: light-dark(#4d5850, #9fad9f);
+  --faint: light-dark(#faf9f4, #131812);
+  --faint-foreground: light-dark(#7b847c, #6f7a6f);
+  --accent: color-mix(in srgb, var(--accent-solid) 12%, var(--background));
+  --border: light-dark(#d9d4c3, #2b342a);
+  --input: light-dark(#c9c3b0, #3a4539);
+  --ring: var(--accent-solid);
+  --danger: light-dark(#b3261e, #f2847b);
+  --success: light-dark(#1f7a4d, #59b98a);
+  --warning: light-dark(#9a5b00, #f0b05a);
+
+  --surface: light-dark(#eeebdf, #0c100b);
+  --link: var(--accent-ink);
+
+  /* Type */
+  --font-sans: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Outfit", system-ui, sans-serif;
+
+  /* Layout */
+  --topbar-h: 3.25rem;
+  --reading-width: 46rem;
+  --page-width: 80rem;
+  --spii-radius: .6rem;
+  --spii-shadow: 0 1px 2px rgb(22 31 24 / .06), 0 .5rem 1.5rem -.75rem rgb(22 31 24 / .25);
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+:root[data-accent="1a"] { --accent-solid: var(--spii-1a-ink); --accent-on: light-dark(#fff, #1a0b28); }
+:root[data-accent="1b"] { --accent-solid: var(--spii-1b-ink); --accent-on: light-dark(#fff, #160925); }
+:root[data-accent="2a"] { --accent-solid: var(--spii-2a-ink); --accent-on: light-dark(#fff, #2a1204); }
+:root[data-accent="2b"] { --accent-solid: var(--spii-2b-ink); --accent-on: light-dark(#fff, #2a1204); }
+:root[data-accent="3a"] { --accent-solid: var(--spii-3a-ink); --accent-on: light-dark(#fff, #04223a); }
+:root[data-accent="3b"] { --accent-solid: var(--spii-3b-ink); --accent-on: light-dark(#fff, #04223a); }
+
+/* A deliverable's colour on any element: data-deliverable="1a" ... "3b" sets --deliv-color,
+   --deliv-ink, --deliv-tint and --deliv-on, which the components below read. */
+[data-deliverable="1a"] { --deliv-color: var(--spii-1a); --deliv-ink: var(--spii-1a-ink); --deliv-tint: var(--spii-1a-tint); --deliv-on: var(--spii-1a-on); --deliv-hex: url("assets/hex/1a.svg"); }
+[data-deliverable="1b"] { --deliv-color: var(--spii-1b); --deliv-ink: var(--spii-1b-ink); --deliv-tint: var(--spii-1b-tint); --deliv-on: var(--spii-1b-on); --deliv-hex: url("assets/hex/1b.svg"); }
+[data-deliverable="2a"] { --deliv-color: var(--spii-2a); --deliv-ink: var(--spii-2a-ink); --deliv-tint: var(--spii-2a-tint); --deliv-on: var(--spii-2a-on); --deliv-hex: url("assets/hex/2a.svg"); }
+[data-deliverable="2b"] { --deliv-color: var(--spii-2b); --deliv-ink: var(--spii-2b-ink); --deliv-tint: var(--spii-2b-tint); --deliv-on: var(--spii-2b-on); --deliv-hex: url("assets/hex/2b.svg"); }
+[data-deliverable="3a"] { --deliv-color: var(--spii-3a); --deliv-ink: var(--spii-3a-ink); --deliv-tint: var(--spii-3a-tint); --deliv-on: var(--spii-3a-on); --deliv-hex: url("assets/hex/3a.svg"); }
+[data-deliverable="3b"] { --deliv-color: var(--spii-3b); --deliv-ink: var(--spii-3b-ink); --deliv-tint: var(--spii-3b-tint); --deliv-on: var(--spii-3b-on); --deliv-hex: url("assets/hex/3b.svg"); }
+
+/* ---------- 2. Base ---------- */
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--topbar-h) + 1rem); }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; letter-spacing: -0.015em; }
+a { color: var(--link); }
+a.button { text-decoration: none; }
+a.button:where(:not(.outline, .ghost, [data-variant])) { color: var(--primary-foreground); }
+a.button:where(.outline, .ghost) { color: var(--foreground); }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+.spii-shell { max-width: var(--page-width); margin-inline: auto; padding-inline: 1.5rem; }
+.spii-shell.narrow { max-width: calc(var(--reading-width) + 3rem); }
+
+/* ---------- 3. Top bar with the site menu (built by spii-nav.js) ---------- */
+.spii-topbar { position: sticky; top: 0; z-index: 100; background: var(--card); border-bottom: 1px solid var(--border); }
+.spii-topbar__inner {
+  display: flex; align-items: center; gap: 1rem;
+  height: var(--topbar-h); max-width: var(--page-width); margin-inline: auto; padding-inline: 1rem;
+}
+.spii-topbar__brand {
+  display: inline-flex; align-items: center; gap: .5rem; flex: 0 0 auto;
+  font-family: var(--font-heading); font-weight: 700; font-size: 1.125rem; letter-spacing: .02em;
+  color: var(--foreground); text-decoration: none;
+}
+.spii-topbar__brand svg { width: 2.75rem; height: auto; display: block; }
+.spii-topbar__nav { display: flex; align-items: stretch; align-self: stretch; gap: .125rem; margin: 0; padding: 0; list-style: none; }
+.spii-topbar__nav li { display: flex; margin: 0; padding: 0; }
+.spii-topbar__nav a {
+  display: inline-flex; align-items: center; gap: .4rem; padding: 0 .6rem;
+  color: var(--muted-foreground); font-weight: 500; font-size: .9375rem; text-decoration: none; white-space: nowrap;
+  border-bottom: 3px solid transparent; margin-bottom: -1px;
+}
+.spii-topbar__nav a:hover { color: var(--foreground); }
+.spii-topbar__nav a[aria-current="page"] { color: var(--foreground); border-bottom-color: var(--deliv-color, var(--accent-solid)); }
+.spii-topbar__nav .code { font-size: .75rem; font-weight: 700; color: var(--deliv-ink); }
+.spii-topbar__spacer { flex: 1; }
+.spii-topbar__btn {
+  display: inline-grid; place-items: center; width: 2.25rem; height: 2.25rem; padding: 0;
+  background: transparent; color: var(--muted-foreground); border: 1px solid transparent; border-radius: .5rem; cursor: pointer;
+}
+.spii-topbar__btn:hover { background: var(--muted); color: var(--foreground); }
+.spii-topbar__btn svg { width: 1.1rem; height: 1.1rem; }
+.spii-topbar__menu-btn { display: none; }
+
+@media (max-width: 64rem) {
+  .spii-topbar__menu-btn { display: inline-grid; }
+  .spii-topbar__nav {
+    display: none; position: absolute; inset: var(--topbar-h) 0 auto 0;
+    flex-direction: column; gap: 0; padding: .5rem 1rem 1rem;
+    background: var(--card); border-bottom: 1px solid var(--border);
+  }
+  .spii-topbar[data-open] .spii-topbar__nav { display: flex; }
+  .spii-topbar__nav li { display: block; width: 100%; }
+  .spii-topbar__nav a { display: flex; padding: .7rem .25rem; border-bottom: 1px solid var(--border); margin: 0; }
+  .spii-topbar__nav a[aria-current="page"] { border-bottom-color: var(--border); color: var(--deliv-ink, var(--accent-solid)); }
+}
+html[data-embed] .spii-topbar { display: none; }
+
+/* For oat's sidebar layout: subtract the bar from the app's height */
+body[data-sidebar-layout] #app-shell, .app-shell { height: calc(100dvh - var(--topbar-h)); }
+
+/* ---------- 4. Page head ---------- */
+.spii-page-head { border-bottom: 1px solid var(--border); padding-block: 2.5rem 2rem; }
+.spii-page-head__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 1.75rem; }
+.spii-page-head__inner > .spii-hex { --spii-hex-size: 5.5rem; }
+.spii-page-head__text { flex: 1 1 20rem; min-width: 0; }
+.spii-page-head .kicker { margin: 0 0 .25rem; color: var(--deliv-ink, var(--accent-ink)); font-weight: 600; font-size: .875rem; letter-spacing: .06em; text-transform: uppercase; }
+.spii-page-head h1 { margin: 0; font-size: clamp(1.875rem, 1.5rem + 1.5vw, 2.6rem); line-height: 1.1; }
+.spii-page-head .byline { margin: .6rem 0 0; color: var(--muted-foreground); }
+
+/* ---------- 5. Hexagon of a deliverable ----------
+   <span class="spii-hex" data-deliverable="2a" role="img" aria-label="2A Landscape"></span>
+   The coloured hexagon with its pictogram (assets/hex/<id>.svg); size via --spii-hex-size. */
+.spii-hex {
+  --spii-hex-size: 3rem;
+  display: inline-block; flex: 0 0 auto; vertical-align: middle;
+  width: var(--spii-hex-size); aspect-ratio: 40 / 54;
+  background: var(--deliv-hex) center / contain no-repeat;
+}
+/* A plain hexagon in any colour (the shape as a mask): <span class="spii-hex-shape"></span> */
+.spii-hex-shape {
+  display: inline-block; width: 1em; aspect-ratio: 40 / 54; vertical-align: -.15em;
+  background: var(--deliv-color, var(--accent-solid));
+  -webkit-mask: url("assets/hex/hex.svg") center / contain no-repeat; mask: url("assets/hex/hex.svg") center / contain no-repeat;
+}
+
+/* ---------- 6. Cards, tags, callouts ---------- */
+.spii-card {
+  display: block; background: var(--card); color: var(--card-foreground);
+  border: 1px solid var(--border); border-top: 4px solid var(--deliv-color, var(--border));
+  border-radius: var(--spii-radius); padding: 1rem 1.25rem; text-decoration: none;
+}
+a.spii-card { transition: box-shadow .15s, transform .15s; }
+a.spii-card:hover { box-shadow: var(--spii-shadow); transform: translateY(-2px); }
+.spii-card .code { font-weight: 700; color: var(--deliv-ink, var(--accent-ink)); }
+
+.spii-tag {
+  display: inline-block; padding: .1rem .6rem; border-radius: 999px;
+  font-size: .75rem; font-weight: 600; letter-spacing: .02em; vertical-align: middle;
+  background: var(--deliv-tint, var(--muted)); color: var(--deliv-ink, var(--muted-foreground));
+}
+
+.spii-callout {
+  margin: 0 0 1.25rem; padding: .9rem 1.1rem;
+  border: 1px solid var(--border); border-left: 4px solid var(--deliv-color, var(--accent-solid));
+  border-radius: var(--spii-radius); background: var(--deliv-tint, var(--card));
+}
+.spii-callout > :last-child { margin-bottom: 0; }
+
+/* The six colours as a strip, as a brand accent (for example above the footer) */
+.spii-colour-strip { display: block; height: .375rem; background: linear-gradient(90deg,
+  var(--spii-1a) 0 16.667%, var(--spii-1b) 0 33.333%, var(--spii-2a) 0 50%,
+  var(--spii-2b) 0 66.667%, var(--spii-3a) 0 83.333%, var(--spii-3b) 0); }
+
+/* ---------- 7. Readable text and footer ---------- */
+.spii-prose { max-width: var(--reading-width); }
+.spii-prose h2 { font-size: 1.5rem; margin: 2.25rem 0 .75rem; }
+.spii-prose h3 { font-size: 1.15rem; margin: 1.75rem 0 .5rem; }
+.spii-prose code { font-size: .9em; padding: .1em .35em; border-radius: .25rem; background: var(--muted); }
+
+.spii-footer { margin-top: 3rem; padding-block: 1.5rem 2.5rem; border-top: 1px solid var(--border); color: var(--muted-foreground); font-size: .875rem; }
+html[data-embed] .spii-footer, html[data-embed] .spii-page-head { display: none; }
+
+/* Dialogs scroll in one place only (as in DURF). */
+dialog:modal:has(> form) { overflow: hidden; display: flex; flex-direction: column; }
+dialog:modal > form { flex: 1 1 auto; min-height: 0; max-height: 100%; display: flex; flex-direction: column; margin: 0; }
+dialog:modal > form > header, dialog:modal > form > footer { flex: 0 0 auto; }
+dialog:modal > form > :not(header):not(footer) { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
