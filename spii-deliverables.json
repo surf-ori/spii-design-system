@@ -1,0 +1,82 @@
+{
+  "version": "0.1.0",
+  "project": {
+    "name": "Strategic Plan for Integrated Infrastructure",
+    "short": "SPII",
+    "home": "https://surf-ori.github.io/spii-overview/"
+  },
+  "deliverables": [
+    {
+      "id": "1a",
+      "pair": 1,
+      "kind": "Reference model",
+      "title": "Values and Principles",
+      "short": "Principles",
+      "summary": "Shared values and principles that define a connected Open Science infrastructure.",
+      "url": "https://surf-ori.github.io/spii-1a-values-and-principles/",
+      "repo": "spii-1a-values-and-principles",
+      "colour": "#7B3FB0",
+      "pictogram": "balance"
+    },
+    {
+      "id": "1b",
+      "pair": 1,
+      "kind": "Tool",
+      "title": "Principles Alignment Tool",
+      "short": "Alignment",
+      "summary": "Self-assess how your Open Science infrastructure puts the shared values and principles into practice.",
+      "url": "https://surf-ori.github.io/spii-1b-principles-alignment-tool/",
+      "repo": "spii-1b-principles-alignment-tool",
+      "colour": "#52247D",
+      "pictogram": "gauge"
+    },
+    {
+      "id": "2a",
+      "pair": 2,
+      "kind": "Reference model",
+      "title": "Landscape & Researcher Journey",
+      "short": "Landscape",
+      "summary": "A map of the ecosystem, seen through the path a researcher actually takes.",
+      "url": "https://surf-ori.github.io/spii-2a-landscape-researcher-journey/",
+      "repo": "spii-2a-landscape-researcher-journey",
+      "colour": "#E8702A",
+      "pictogram": "journey"
+    },
+    {
+      "id": "2b",
+      "pair": 2,
+      "kind": "Tool",
+      "title": "Mapping of Infrastructures & Projects",
+      "short": "Mapping",
+      "summary": "Existing components and projects, mapped to find overlaps and gaps.",
+      "url": "https://surf-ori.github.io/spii-2b-infrastructure-mapping/",
+      "repo": "spii-2b-infrastructure-mapping",
+      "colour": "#B04A12",
+      "pictogram": "network"
+    },
+    {
+      "id": "3a",
+      "pair": 3,
+      "kind": "Reference model",
+      "title": "Capabilities & Interoperability",
+      "short": "Interoperability",
+      "summary": "The functions every component needs, and how they connect across domains.",
+      "url": "https://surf-ori.github.io/spii-3a-capabilities-interoperability/",
+      "repo": "spii-3a-capabilities-interoperability",
+      "colour": "#1F86C1",
+      "pictogram": "interop"
+    },
+    {
+      "id": "3b",
+      "pair": 3,
+      "kind": "Tool",
+      "title": "Tool Box of Shared Tools",
+      "short": "Toolbox",
+      "summary": "A shared set of reusable tools that put interoperability into practice.",
+      "url": "https://surf-ori.github.io/spii-3b-toolbox-shared-tools/",
+      "repo": "spii-3b-toolbox-shared-tools",
+      "colour": "#145F8C",
+      "pictogram": "toolbox"
+    }
+  ]
+}
