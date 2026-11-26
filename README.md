@@ -13,14 +13,14 @@ Put this in the head of every page, in this order. Load `spii-nav.js` without `d
     <script src="https://surf-ori.github.io/spii-design-system/spii-nav.js"></script>
     <script src="https://surf-ori.github.io/spii-design-system/lib/oat.min.js" defer></script>
 
-The top bar goes first in the body, or at `<div id="spii-topbar"></div>`. `data-topbar="off"` on the script tag keeps only the theme and `window.SPII`. `?embed` in the URL hides the bar, page head and footer.
+The top bar goes first in the body, or at `<div id="spii-topbar"></div>`. A floating **Feedback** button sits at the bottom right (as on the DURF sites): it opens a short dialog and then the issue form `.github/ISSUE_TEMPLATE/feedback.yml` of the repo the page lives in, with the text filled in. On `<html>`: `data-feedback-field` names the form field that gets the text (default `feedback`), `data-feedback-repo` overrides the repo, `data-feedback-email` also offers e-mail. `data-feedback="off"` on the script tag leaves the button out. `data-topbar="off"` on the script tag keeps only the theme and `window.SPII`. `?embed` in the URL hides the bar, page head and footer.
 
 Optionally give a site the colour of its deliverable: `<html data-accent="2a">` (`1a` … `3b`).
 
 ## Files
 
 - `spii.css`: tokens (brand green, the six deliverable colours, oat recoloured, Outfit type), top bar, page head, hexagon, card, tag, callout, colour strip, footer.
-- `spii-nav.js`: top bar with the site menu, theme choice (system, light, dark; stored as `spii-theme` in localStorage and shared by all SPII sites), favicon, and `window.SPII` (`deliverables`, `deliverable(id)`, `assets`, `theme()`, `setTheme(t)`, event `spii:theme`).
+- `spii-nav.js`: top bar with the site menu, the floating feedback button, theme choice (system, light, dark; stored as `spii-theme` in localStorage and shared by all SPII sites), favicon, and `window.SPII` (`deliverables`, `deliverable(id)`, `assets`, `theme()`, `setTheme(t)`, event `spii:theme`).
 - `spii-deliverables.json`: the six deliverables (id, kind, title, short label, summary, URL, repo, colour, pictogram). The single source for the menu.
 - `assets/spii-logo.svg`: the hexagon diagram of the overview page, as the logo (follows the system's light/dark mode). `assets/spii-logo-pictograms.svg`: large version with the pictograms, each hexagon a link. `assets/favicon.svg`: square crop for browser tabs.
 - `assets/hex/<id>.svg`: each deliverable's hexagon with its pictogram; `assets/hex/hex.svg`: the plain shape (for masks).

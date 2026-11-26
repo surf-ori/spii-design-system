@@ -81,6 +81,7 @@
 &lt;link rel="stylesheet" href="https://surf-ori.github.io/spii-design-system/spii.css"&gt;
 &lt;script src="https://surf-ori.github.io/spii-design-system/spii-nav.js"&gt;&lt;/script&gt;
 &lt;script src="https://surf-ori.github.io/spii-design-system/lib/oat.min.js" defer&gt;&lt;/script&gt;</code></pre>
+      <p>Every page gets a floating <strong>Feedback</strong> button at the bottom right. It opens a short dialog and then the issue form of the repo the page lives in, with the text filled in; <code>data-feedback-field</code> on <code>&lt;html&gt;</code> names the form field for the text (default <code>feedback</code>).</p>
       <p>The theme (system, light, dark) is stored under <code>spii-theme</code> in localStorage and shared by all SPII sites. Pages can read it with <code>SPII.theme()</code>, change it with <code>SPII.setTheme("dark")</code>, and listen for the <code>spii:theme</code> event.</p>
 
       <h2>Components</h2>
