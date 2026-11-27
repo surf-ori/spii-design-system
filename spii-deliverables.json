@@ -22,9 +22,9 @@
       "id": "1b",
       "pair": 1,
       "kind": "Tool",
-      "title": "Principles Alignment Tool",
+      "title": "Principles Alignment Assessment Tool",
       "short": "Alignment",
-      "summary": "Self-assess how your Open Science infrastructure puts the shared values and principles into practice.",
+      "summary": "Check how far an infrastructure component follows the shared principles.",
       "url": "https://surf-ori.github.io/spii-1b-principles-alignment-tool/",
       "repo": "spii-1b-principles-alignment-tool",
       "colour": "#52247D",
@@ -34,9 +34,9 @@
       "id": "2a",
       "pair": 2,
       "kind": "Reference model",
-      "title": "Landscape & Researcher Journey",
+      "title": "Landscape of Open Science infrastructures",
       "short": "Landscape",
-      "summary": "A map of the ecosystem, seen through the path a researcher actually takes.",
+      "summary": "A map of the ecosystem.",
       "url": "https://surf-ori.github.io/spii-2a-landscape-researcher-journey/",
       "repo": "spii-2a-landscape-researcher-journey",
       "colour": "#E8702A",
@@ -46,7 +46,7 @@
       "id": "2b",
       "pair": 2,
       "kind": "Tool",
-      "title": "Mapping of Infrastructures & Projects",
+      "title": "Mapping of Infrastructures & Infrastructure development projects",
       "short": "Mapping",
       "summary": "Existing components and projects, mapped to find overlaps and gaps.",
       "url": "https://surf-ori.github.io/spii-2b-infrastructure-mapping/",
@@ -76,7 +76,7 @@
       "url": "https://surf-ori.github.io/spii-3b-toolbox-shared-tools/",
       "repo": "spii-3b-toolbox-shared-tools",
       "colour": "#145F8C",
-      "pictogram": "toolbox"
+      "pictogram": "checklist"
     }
   ],
   "activities": {

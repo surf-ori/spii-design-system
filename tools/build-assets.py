@@ -37,20 +37,20 @@ PICTOGRAMS = {
     # 1a Values and Principles: a balance
     "balance": '<path d="M0 -18V16M-10 16H10M-17 -11H17M-17 -11L-22 3M-17 -11L-12 3M17 -11L12 3M17 -11L22 3"/>'
                '<path d="M-22 3H-12A5 4 0 0 1 -22 3ZM12 3H22A5 4 0 0 1 12 3Z"/><circle cx="0" cy="-18" r="2.2"/>',
-    # 1b Principles Alignment Tool: a gauge
+    # 1b Principles Alignment Assessment Tool: a gauge
     "gauge": '<path d="M-18 8A18 18 0 0 1 18 8"/><path d="M-12.7 -4.7L-10 -2.6M0 -10V-6.5M12.7 -4.7L10 -2.6"/>'
              '<path d="M0 8L9 -4"/><circle cx="0" cy="8" r="2.6"/>',
-    # 2a Landscape & Researcher Journey: a route with a destination pin
+    # 2a Landscape of Open Science infrastructures: a route with a destination pin
     "journey": '<path d="M-17 16C-6 16 -14 2 -3 2S6 -8 12 -8" stroke-dasharray="3 4"/><circle cx="-17" cy="16" r="3"/>'
                '<path d="M13 -2C9 -7 7 -10 7 -13A6 6 0 0 1 19 -13C19 -10 17 -7 13 -2Z"/>',
-    # 2b Mapping of Infrastructures & Projects: a network
+    # 2b Mapping of Infrastructures & Infrastructure development projects: a network
     "network": '<path d="M0 0L0 -15M0 0L-15 -4M0 0L14 -6M0 0L-8 14M0 0L11 13M-15 -4L0 -15L14 -6M-8 14L11 13"/>'
                '<circle cx="0" cy="0" r="3.2"/><circle cx="0" cy="-15" r="2.6"/><circle cx="-15" cy="-4" r="2.6"/>'
                '<circle cx="14" cy="-6" r="2.6"/><circle cx="-8" cy="14" r="2.6"/><circle cx="11" cy="13" r="2.6"/>',
     # 3a Practical Interoperability Guidelines: two linked rings
     "interop": '<circle cx="-6" cy="0" r="11"/><circle cx="6" cy="0" r="11"/>',
-    # 3b Interoperability Assessment Tool: a toolbox
-    "toolbox": '<rect x="-18" y="-6" width="36" height="22" rx="2.5"/><path d="M-7 -6V-12H7V-6M-18 3H18M-3 3V7H3V3"/>',
+    # 3b Interoperability Assessment Tool: a checklist on a clipboard
+    "checklist": '<rect x="-14" y="-16" width="28" height="35" rx="3"/><path d="M-6 -16V-20H6V-16"/><path d="M-8 -5L-5 -2L0 -8M4 -5H9M-8 9L-5 12L0 6M4 9H9"/>',
 }
 
 

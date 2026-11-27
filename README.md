@@ -33,9 +33,9 @@ Optionally give a site the colour of its deliverable: `<html data-accent="2a">` 
 | Id | Kind | Title | Colour |
 | --- | --- | --- | --- |
 | 1A | Reference model | Values and Principles | #7B3FB0 |
-| 1B | Tool | Principles Alignment Tool | #52247D |
-| 2A | Reference model | Landscape & Researcher Journey | #E8702A |
-| 2B | Tool | Mapping of Infrastructures & Projects | #B04A12 |
+| 1B | Tool | Principles Alignment Assessment Tool | #52247D |
+| 2A | Reference model | Landscape of Open Science infrastructures | #E8702A |
+| 2B | Tool | Mapping of Infrastructures & Infrastructure development projects | #B04A12 |
 | 3A | Reference model | Practical Interoperability Guidelines | #1F86C1 |
 | 3B | Tool | Interoperability Assessment Tool | #145F8C |
 
