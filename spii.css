@@ -194,6 +194,34 @@ body[data-sidebar-layout] #app-shell, .app-shell { height: calc(100dvh - var(--t
   -webkit-mask: url("assets/hex/hex.svg") center / contain no-repeat; mask: url("assets/hex/hex.svg") center / contain no-repeat;
 }
 
+/* ---------- Research activities ----------
+   <span class="spii-activity" data-activity="Discover" role="img" aria-label="Discover"></span>
+   The icon of a research activity in the current text colour; size via --spii-activity-size.
+   Group colour: add data-activity-group="life-cycle" or "administration". */
+.spii-activity {
+  --spii-activity-size: 1.25rem;
+  display: inline-block; flex: 0 0 auto; vertical-align: -.25em;
+  width: var(--spii-activity-size); height: var(--spii-activity-size);
+  background: currentColor;
+  -webkit-mask: var(--spii-activity-icon) center / contain no-repeat; mask: var(--spii-activity-icon) center / contain no-repeat;
+}
+[data-activity-group="life-cycle"] { color: var(--spii-green); }
+[data-activity-group="administration"] { color: var(--spii-1b-ink); }
+/* ACTIVITIES:BEGIN (tools/build-assets.py) */
+.spii-activity[data-activity="Discover"] { --spii-activity-icon: url("assets/icons/activities/discover.svg"); }
+.spii-activity[data-activity="Hypothesise"] { --spii-activity-icon: url("assets/icons/activities/hypothesise.svg"); }
+.spii-activity[data-activity="Plan"] { --spii-activity-icon: url("assets/icons/activities/plan.svg"); }
+.spii-activity[data-activity="Collect"] { --spii-activity-icon: url("assets/icons/activities/collect.svg"); }
+.spii-activity[data-activity="Process"] { --spii-activity-icon: url("assets/icons/activities/process.svg"); }
+.spii-activity[data-activity="Analyse"] { --spii-activity-icon: url("assets/icons/activities/analyse.svg"); }
+.spii-activity[data-activity="Report"] { --spii-activity-icon: url("assets/icons/activities/report.svg"); }
+.spii-activity[data-activity="Manage & Organise"] { --spii-activity-icon: url("assets/icons/activities/manage-organise.svg"); }
+.spii-activity[data-activity="Document & Preserve"] { --spii-activity-icon: url("assets/icons/activities/document-preserve.svg"); }
+.spii-activity[data-activity="Review & Curate"] { --spii-activity-icon: url("assets/icons/activities/review-curate.svg"); }
+.spii-activity[data-activity="Publish & Communicate"] { --spii-activity-icon: url("assets/icons/activities/publish-communicate.svg"); }
+.spii-activity[data-activity="Evaluate & Monitor"] { --spii-activity-icon: url("assets/icons/activities/evaluate-monitor.svg"); }
+/* ACTIVITIES:END */
+
 /* ---------- 6. Cards, tags, callouts ---------- */
 .spii-card {
   display: block; background: var(--card); color: var(--card-foreground);

@@ -120,6 +120,21 @@ def blank_hex():
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -27 40 54"><polygon points="{hex_points(0, 0)}" fill="#000" stroke="#000" stroke-width="3" stroke-linejoin="round"/></svg>\n'
 
 
+def activity_svg(item):
+    """One research-activity icon as a file: a 20 x 20 stroke drawing in currentColor (black when used as <img>)."""
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" '
+            f'stroke-width="1.6" role="img" aria-label="{html.escape(item["name"])}">{item["svg"]}</svg>\n')
+
+
+def activity_css():
+    """One .spii-activity[data-activity="…"] rule per activity (the icon as a mask, so it takes the text colour)."""
+    rules = []
+    for g in DATA["activities"]["groups"]:
+        for i in g["items"]:
+            rules.append(f'.spii-activity[data-activity="{i["name"]}"] {{ --spii-activity-icon: url("assets/icons/activities/{i["slug"]}.svg"); }}')
+    return "\n".join(rules)
+
+
 def main():
     (ASSETS / "hex").mkdir(parents=True, exist_ok=True)
     (ASSETS / "spii-logo.svg").write_text(logo())
@@ -128,6 +143,12 @@ def main():
     (ASSETS / "hex" / "hex.svg").write_text(blank_hex())
     for d in DATA["deliverables"]:
         (ASSETS / "hex" / f'{d["id"]}.svg').write_text(deliverable_hex(d))
+    (ASSETS / "icons" / "activities").mkdir(parents=True, exist_ok=True)
+    for g in DATA["activities"]["groups"]:
+        for i in g["items"]:
+            (ASSETS / "icons" / "activities" / f'{i["slug"]}.svg').write_text(activity_svg(i))
+    css = ROOT / "spii.css"
+    css.write_text(re.sub(r"/\* ACTIVITIES:BEGIN.*?ACTIVITIES:END \*/", lambda m: "/* ACTIVITIES:BEGIN (tools/build-assets.py) */\n" + activity_css() + "\n/* ACTIVITIES:END */", css.read_text(), flags=re.S))
     nav = ROOT / "spii-nav.js"
     src = nav.read_text()
     block = "/* DATA:BEGIN (tools/build-assets.py) */ " + json.dumps(DATA, ensure_ascii=False) + " /* DATA:END */"
