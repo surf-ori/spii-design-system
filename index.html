@@ -66,6 +66,10 @@
       <p>Each deliverable has its hexagon with a pictogram, as a separate SVG in <code>assets/hex/</code> (for sites, cards and slides). In a page: <code>&lt;span class="spii-hex" data-deliverable="3b"&gt;&lt;/span&gt;</code>, size via <code>--spii-hex-size</code>.</p>
       <div class="doc-grid" id="cards"></div>
 
+      <h2>Research activities</h2>
+      <p>The research landscape has two groups of activities, each with its own icon: the research life cycle (green) and research administration (purple). They classify an infrastructure in the Principles Alignment Tool and place it in its research-landscape circle. As files in <code>assets/icons/activities/</code>; in a page <code>&lt;span class="spii-activity" data-activity="Discover"&gt;&lt;/span&gt;</code> (the text colour; <code>data-activity-group</code> on a parent gives the group colour); in a script <code>SPII.activityIcon("Discover", 20)</code>.</p>
+      <div id="activities"></div>
+
       <h2>Logo and favicon</h2>
       <p><code>assets/spii-logo.svg</code> is the diagram of the overview page (it follows the system's light or dark mode); <code>assets/spii-logo-pictograms.svg</code> is the large version with the six pictograms; <code>assets/favicon.svg</code> is a square crop for browser tabs.</p>
       <p style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
@@ -134,6 +138,11 @@
         caption.innerHTML = defaultCaption;
       });
 
+      document.getElementById("activities").innerHTML = SPII.activities.map(function (g) {
+        return '<h3>' + text(g.short) + '</h3><div class="doc-grid">' + g.items.map(function (i) {
+          return '<div class="spii-card" style="display:flex;gap:.75rem;align-items:center"><span class="spii-activity" data-activity="' + text(i.name) + '" data-activity-group="' + g.id + '" style="--spii-activity-size:2rem" role="img" aria-label="' + text(i.name) + '"></span><span><strong>' + text(i.name) + '</strong><br><code>' + i.slug + '.svg</code></span></div>';
+        }).join("") + '</div>';
+      }).join("");
       var swatches = document.getElementById("swatches"), cards = document.getElementById("cards");
       SPII.deliverables.forEach(function (d) {
         swatches.insertAdjacentHTML("beforeend", '<div class="swatch" data-deliverable="' + d.id + '"><div></div><div><strong>' + d.id.toUpperCase() + " " + text(d.short) + "</strong><br><code>--spii-" + d.id + "</code> " + d.colour + "</div></div>");

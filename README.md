@@ -23,6 +23,7 @@ Optionally give a site the colour of its deliverable: `<html data-accent="2a">` 
 - `spii-nav.js`: top bar with the site menu, the floating feedback button, theme choice (system, light, dark; stored as `spii-theme` in localStorage and shared by all SPII sites), favicon, and `window.SPII` (`deliverables`, `deliverable(id)`, `assets`, `theme()`, `setTheme(t)`, event `spii:theme`).
 - `spii-deliverables.json`: the six deliverables (id, kind, title, short label, summary, URL, repo, colour, pictogram). The single source for the menu.
 - `assets/spii-logo.svg`: the hexagon diagram of the overview page, as the logo (follows the system's light/dark mode). `assets/spii-logo-pictograms.svg`: large version with the pictograms, each hexagon a link. `assets/favicon.svg`: square crop for browser tabs.
+- `assets/icons/activities/<slug>.svg`: the twelve research-activity icons (research life cycle and research administration), 20 × 20 stroke drawings. In a page: `<span class="spii-activity" data-activity="Discover">`; in a script: `SPII.activities`, `SPII.activity(name)`, `SPII.activityIcon(name, size, colour)`. The drawings live in `spii-deliverables.json` under `activities`.
 - `assets/hex/<id>.svg`: each deliverable's hexagon with its pictogram; `assets/hex/hex.svg`: the plain shape (for masks).
 - `fonts/`: Outfit (SIL Open Font License). `lib/`: oat 1.0.0 (MIT).
 - `index.html`: the documentation page, with the interactive six-hexagon figure.
