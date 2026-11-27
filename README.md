@@ -36,8 +36,8 @@ Optionally give a site the colour of its deliverable: `<html data-accent="2a">` 
 | 1B | Tool | Principles Alignment Tool | #52247D |
 | 2A | Reference model | Landscape & Researcher Journey | #E8702A |
 | 2B | Tool | Mapping of Infrastructures & Projects | #B04A12 |
-| 3A | Reference model | Capabilities & Interoperability | #1F86C1 |
-| 3B | Tool | Tool Box of Shared Tools | #145F8C |
+| 3A | Reference model | Practical Interoperability Guidelines | #1F86C1 |
+| 3B | Tool | Interoperability Assessment Tool | #145F8C |
 
 Each pair shares a hue: the reference model is the lighter tone, its tool the deeper one. In CSS: `--spii-<id>`, `--spii-<id>-ink`, `--spii-<id>-tint`, `--spii-<id>-on`, or `data-deliverable="<id>"` on an element for `--deliv-color`, `--deliv-ink`, `--deliv-tint`, `--deliv-on`.
 

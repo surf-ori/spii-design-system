@@ -47,9 +47,9 @@ PICTOGRAMS = {
     "network": '<path d="M0 0L0 -15M0 0L-15 -4M0 0L14 -6M0 0L-8 14M0 0L11 13M-15 -4L0 -15L14 -6M-8 14L11 13"/>'
                '<circle cx="0" cy="0" r="3.2"/><circle cx="0" cy="-15" r="2.6"/><circle cx="-15" cy="-4" r="2.6"/>'
                '<circle cx="14" cy="-6" r="2.6"/><circle cx="-8" cy="14" r="2.6"/><circle cx="11" cy="13" r="2.6"/>',
-    # 3a Capabilities & Interoperability: two linked rings
+    # 3a Practical Interoperability Guidelines: two linked rings
     "interop": '<circle cx="-6" cy="0" r="11"/><circle cx="6" cy="0" r="11"/>',
-    # 3b Tool Box of Shared Tools: a toolbox
+    # 3b Interoperability Assessment Tool: a toolbox
     "toolbox": '<rect x="-18" y="-6" width="36" height="22" rx="2.5"/><path d="M-7 -6V-12H7V-6M-18 3H18M-3 3V7H3V3"/>',
 }
 
